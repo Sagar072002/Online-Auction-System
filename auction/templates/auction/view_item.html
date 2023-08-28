@@ -1,0 +1,48 @@
+{% extends 'auction/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'auction/viewItem.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="item-cart">
+	<div class="image">
+		<div class="side-images d-flex justify-content-center mb-3">
+			{% for image in images %}
+			<a class="border mx-1 rounded-2" data-type="image">
+				<img class="smallImg" src="{{ image.photo.url }}" />
+			</a>
+			{% endfor %}
+		</div>
+		<div class="border rounded-4 mb-3 main-image">
+			<a id="bigImgLink" class="rounded-4" target="_blank" data-type="image"
+				href="{{ images.0.photo.url }}">
+				<img id="bigImg" src="{{ images.0.photo.url }}" />
+			</a>
+		</div>
+		
+	</div>
+	<div class="product-detail">
+		<h2 class="heading">Product Name: <span>{{ item.name|title }}</span> </h2>
+		{% if item.current_bid %}
+		<p class="price">Current Bid : <span class="stock"> ₹ {{ item.current_bid }}</span></p>
+		{% else %}
+		<p class="price">Start Bid : <span class="stock">  ₹ {{ item.initial_bid }}</span></p>
+		{% endif %}
+		<p class="text"><span class="desc">  Description: </span><br> {{ item.description }}</p>          
+
+		  <div class="buttons">
+			<a href="{% url 'bid' pk=item.pk %}" ><button>Bid</button></a>
+			<!-- <button>Save</button> -->
+		</div>
+	</div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'auction/itemScript.js' %}"></script>
+{% endblock script %}
